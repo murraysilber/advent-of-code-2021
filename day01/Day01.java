@@ -18,24 +18,30 @@ public class Day01 {
                 }
             }
             input = integers.stream().mapToInt(i -> i).toArray();
-            System.out.println(integers);
             scanner.close();
-            ;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
         return input;
     }
 
-    public void solvePart01() {
-
+    public int solvePart01() {
+        int[] input = parseInput();
+        int depthIncreased = 0;
+        for (int i = 1; i < input.length; i++) {
+            int valueA = input[i - 1];
+            int valueB = input[i];
+            if (valueB > valueA) {
+                depthIncreased++;
+            }
+        }
+        return depthIncreased;
     }
 
     public static void main(String[] args) {
 
         Day01 day01 = new Day01();
-        day01.parseInput();
+        System.out.println(day01.solvePart01());
 
     }
 }
