@@ -38,10 +38,26 @@ public class Day01 {
         return depthIncreased;
     }
 
+    public int solvePart02() {
+        int[] input = parseInput();
+        int depthIncreased = 0;
+        for (int i = 1; i < input.length - (input.length % 3); i++) {
+
+            int depthRangeA = input[i - 1] + input[i] + input[i + 1];
+            int depthRangeB = input[i] + input[i + 1] + input[i + 2];
+
+            if (depthRangeB > depthRangeA) {
+                depthIncreased++;
+            }
+        }
+        return depthIncreased;
+    }
+
     public static void main(String[] args) {
 
         Day01 day01 = new Day01();
         System.out.println(day01.solvePart01());
+        System.out.println(day01.solvePart02());
 
     }
 }
