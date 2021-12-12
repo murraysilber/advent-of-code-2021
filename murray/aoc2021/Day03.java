@@ -1,59 +1,16 @@
-package day03;
+package murray.aoc2021;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class Day03 {
+public class Day03 extends AoC2021Core {
 
-    public List<String> parseInput() {
-        List<String> input = null;
-
-        try {
-            // Trying some NIO
-            input = Files.lines(Paths.get("day03/input.txt")).collect(Collectors.toList());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return input;
+    public Day03(String day) {
+        super(day);
     }
 
-    public int solvePart01() {
-        List<String> input = parseInput();
-        int powerConsumption = 0;
-        String gammaRate = "";
-        String epsilonRate = "";
-        for (int i = 0; i < input.get(0).length(); ++i) {
-            int ones = 0;
-            for (String code : input) {
-                if (code.charAt(i) == '1') {
-                    ++ones;
-                }
-            }
-            int zeros = input.size() - ones;
-            gammaRate += ones > zeros ? '1' : '0';
-            epsilonRate += ones > zeros ? '0' : '1';
-        }
-
-        powerConsumption = Integer.parseInt(gammaRate, 2) * Integer.parseInt(epsilonRate, 2);
-        return powerConsumption;
-
-    }
-
-    public int solvePart02() {
-        int oxygenGeneratorRating = getOxygenRating();
-        int co2ScrubberRating = getCO2Rating();
-        int lifeSupportRating = oxygenGeneratorRating * co2ScrubberRating;
-        return lifeSupportRating;
-    }
-
-    public int getOxygenRating() {
+    private int getOxygenRating(List<String> input) {
         int oxygenRating = 0;
-        List<String> input = parseInput();
         for (int i = 0; i < input.get(0).length(); ++i) {
             int ones = 0;
             for (String code : input) {
@@ -83,9 +40,8 @@ public class Day03 {
         return oxygenRating;
     }
 
-    public int getCO2Rating() {
+    private int getCO2Rating(List<String> input) {
         int co2Rating = 0;
-        List<String> input = parseInput();
         for (int i = 0; i < input.get(0).length(); ++i) {
             int ones = 0;
             for (String code : input) {
@@ -115,10 +71,42 @@ public class Day03 {
         return co2Rating;
     }
 
-    public static void main(String[] args) {
-        Day03 day03 = new Day03();
-        System.out.println(day03.solvePart01());
-        System.out.println(day03.solvePart02());
+    @Override
+    void solvePart01(List<String> input) {
+        long powerConsumption = 0;
+        String gammaRate = "";
+        String epsilonRate = "";
+        for (int i = 0; i < input.get(0).length(); ++i) {
+            int ones = 0;
+            for (String code : input) {
+                if (code.charAt(i) == '1') {
+                    ++ones;
+                }
+            }
+            int zeros = input.size() - ones;
+            gammaRate += ones > zeros ? '1' : '0';
+            epsilonRate += ones > zeros ? '0' : '1';
+        }
+
+        powerConsumption = Long.parseLong(gammaRate, 2) * Long.parseLong(epsilonRate, 2);
+        displayResult(String.valueOf(powerConsumption), "1");
+        
     }
+
+    @Override
+    void solvePart02(List<String> input) {
+        int oxygenGeneratorRating = getOxygenRating(input);
+        int co2ScrubberRating = getCO2Rating(input);
+        int lifeSupportRating = oxygenGeneratorRating * co2ScrubberRating;
+        displayResult(String.valueOf(lifeSupportRating), "2");
+    }
+
+    public static void main(String[] args) {
+        Day03 day03 = new Day03("3");
+        day03.solvePart01(day03.getInput());
+        day03.solvePart02(day03.getInput());
+    }
+
+    
 
 }

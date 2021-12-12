@@ -1,29 +1,15 @@
-package day02;
+package murray.aoc2021;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class Day02 {
+public class Day02 extends AoC2021Core {
 
-    public List<String> parseInput() {
-        List<String> input = new ArrayList<>();
-        // Pattern pattern = Pattern.compile("[a-zA-Z]+[\\s][\\d]+"); //Just an idea
-        try (Scanner scanner = new Scanner(new File("day02/input.txt"))) {
-            while (scanner.hasNextLine()) {
-                input.add(scanner.nextLine());
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return input;
+    public Day02(String day) {
+        super(day);
     }
 
-    public int solvePart01() {
-        List<String> input = parseInput();
+    @Override
+    public void solvePart01(List<String> input) {
         int horizontalPosition = 0;
         int depth = 0;
         for (String command : input) {
@@ -43,11 +29,11 @@ public class Day02 {
                     break;
             }
         }
-        return horizontalPosition * depth;
+        displayResult(String.valueOf(horizontalPosition * depth), "1");
     }
 
-    public int solvePart02() {
-        List<String> input = parseInput();
+    @Override
+    public void solvePart02(List<String> input) {
         int horizontalPosition = 0;
         int depth = 0;
         int aim = 0;
@@ -69,12 +55,12 @@ public class Day02 {
                     break;
             }
         }
-        return horizontalPosition * depth;
+        displayResult(String.valueOf(horizontalPosition * depth), "2");
     }
 
     public static void main(String[] args) {
-        Day02 day02 = new Day02();
-        System.out.println(day02.solvePart01());
-        System.out.println(day02.solvePart02());
+        AoC2021Core day02 = new Day02("2");
+        day02.solvePart01(day02.getInput());
+        day02.solvePart02(day02.getInput());
     }
 }
