@@ -27,9 +27,8 @@ public class Day02 {
         int horizontalPosition = 0;
         int depth = 0;
         for (String command : input) {
-            String[] commandSplit = command.split(" ");
-            String direction = commandSplit[0];
-            int units = Integer.parseInt(commandSplit[1]);
+            String direction = command.substring(0, command.indexOf(' ')).trim();
+            int units = Integer.parseInt(command.substring(command.indexOf(' ')).trim());
             switch (direction) {
                 case "forward":
                     horizontalPosition += units;
@@ -53,9 +52,8 @@ public class Day02 {
         int depth = 0;
         int aim = 0;
         for (String command : input) {
-            String[] commandSplit = command.split(" ");
-            String direction = commandSplit[0];
-            int units = Integer.parseInt(commandSplit[1]);
+            String direction = command.substring(0, command.indexOf(' ')).trim();
+            int units = Integer.parseInt(command.substring(command.indexOf(' ')).trim());
             switch (direction) {
                 case "forward":
                     horizontalPosition += units;
@@ -79,5 +77,4 @@ public class Day02 {
         System.out.println(day02.solvePart01());
         System.out.println(day02.solvePart02());
     }
-
 }
