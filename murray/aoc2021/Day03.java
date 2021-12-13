@@ -19,7 +19,7 @@ public class Day03 extends AoC2021Core {
                 }
             }
             int zeros = input.size() - ones;
-            List<String> filteredInput = new ArrayList<String>();
+            List<String> filteredInput = new ArrayList<>();
             for (String code : input) {
                 if (ones >= zeros) {
                     if (code.charAt(i) == '1') {
@@ -50,7 +50,7 @@ public class Day03 extends AoC2021Core {
                 }
             }
             int zeros = input.size() - ones;
-            List<String> filteredInput = new ArrayList<String>();
+            List<String> filteredInput = new ArrayList<>();
             for (String code : input) {
                 if (ones >= zeros) {
                     if (code.charAt(i) == '0') {

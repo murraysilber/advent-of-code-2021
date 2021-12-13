@@ -11,9 +11,20 @@ public abstract class AoC2021Core {
 
     private String day = "";
     private List<String> input;
+    private List<String> testInput;
+    
     public AoC2021Core(String day) {
         this.day = day;
         setInput(parseInput());
+        setTestInput(parseTestInput());
+    }
+
+    public List<String> getTestInput() {
+        return testInput;
+    }
+
+    public void setTestInput(List<String> testInput) {
+        this.testInput = testInput;
     }
 
     public List<String> getInput() {
@@ -24,6 +35,8 @@ public abstract class AoC2021Core {
         this.input = input;
     }
 
+    
+
     abstract void solvePart01(List<String> input);
     abstract void solvePart02(List<String> input);
 
@@ -32,6 +45,18 @@ public abstract class AoC2021Core {
         try {
             // Trying some NIO
             input = Files.lines(Paths.get("resources/day" + day + ".txt")).collect(Collectors.toList());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return input;
+    }
+
+    private List<String> parseTestInput() {
+        List<String> input = null;
+        try {
+            // Trying some NIO
+            input = Files.lines(Paths.get("resources/test" + day + ".txt")).collect(Collectors.toList());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -54,6 +79,10 @@ public abstract class AoC2021Core {
 			ints.add(Long.parseLong(s));
 		return ints;
 	}
+
+    public void displayResult(long answer, String part) {
+		System.out.println("Part " + part + ": " + answer);
+    }
 
     public void displayResult(String answer, String part) {
 		System.out.println("Part " + part + ": " + answer);
