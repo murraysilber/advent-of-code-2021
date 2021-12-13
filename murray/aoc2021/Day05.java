@@ -112,7 +112,7 @@ public class Day05 extends AoC2021Core {
         //day05.solvePart01(day05.getTestInput());
         day05.solvePart01(day05.getInput());
 
-        // day05.solvePart02(day05.getTestInput());
+        day05.solvePart02(day05.getTestInput());
         // day05.solvePart02(day05.getInput());
 
     }
