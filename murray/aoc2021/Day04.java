@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Day04 extends AoC2021Core {
+public class Day04 extends AoCPuzzle {
 
     public Day04(String day) {
         super(day);
@@ -181,7 +181,7 @@ public class Day04 extends AoC2021Core {
     }
 
     public static void main(String[] args) {
-        AoC2021Core day04 = new Day04("4");
+        AoCPuzzle day04 = new Day04("4");
         // day04.solvePart01(day04.getTestInput());
         day04.solvePart01(day04.getInput());
 

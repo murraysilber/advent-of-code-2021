@@ -1,120 +1,142 @@
 package murray.aoc2021;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Map;
+import java.util.Objects;
 
-public class Day05 extends AoC2021Core {
+public class Day05 extends AoCPuzzle {
+    private Map<Point, Integer> grid = new HashMap<>(); // grid where lines must be plotted.
+    private List<Line> lines = null;
 
     public Day05(String day) {
         super(day);
     }
 
+    // create List of Lines
+    private List<Line> getLines(List<String> input) {
+        List<Line> lines = new ArrayList<>();
+        for (String line : input) {
+            String[] linePoints = line.split(" -> ");
+            String[] point1 = linePoints[0].split(",");
+            String[] point2 = linePoints[1].split(",");
+            lines.add(new Line(new Point(point1), new Point(point2)));
+        }
+        return lines;
+    }
+
+    private void plotLinesOnGrid() {
+        for (Line line : this.lines) {
+            Point startPoint = line.getStartPoint();
+            Point endPoint = line.getEndPoint();
+            if (startPoint.y == endPoint.y) {
+                for (int i = Math.min(startPoint.x, endPoint.x); i <= Math.max(startPoint.x, endPoint.x); i++) {
+                    this.grid.merge(new Point(i, startPoint.y), 1, Integer::sum);
+                }          
+            } else if (startPoint.x == endPoint.x) {
+                for (int i = Math.min(startPoint.y, endPoint.y); i <= Math.max(startPoint.y, endPoint.y); i++) {
+                    this.grid.merge(new Point(startPoint.x, i), 1, Integer::sum);
+                }        
+            }
+        }
+    }
+
     @Override
     void solvePart01(List<String> input) {
+        lines = getLines(input);
+        plotLinesOnGrid();
 
-        List<int[]> hydroThermalVents = new ArrayList<>();
-        for (String row : input) {
-            hydroThermalVents.add(getXYRow(row));
-        }
+        int count = 0;
+        for (int visits : this.grid.values()) {
 
-        // part one only wants horizontal or vertical lines, filter out rest
-        Iterator<int[]> iter = hydroThermalVents.iterator();
-        while (iter.hasNext()) {
-            int[] line = iter.next();
-            if (line[0] != line[2] && line[1] != line[3]) {
-                iter.remove();
-            }
+            if (visits > 1)
+                count++;
         }
-
-        // create the xy grid by finding the largest number in the hydroThermalVents
-        // List
-        int biggestNumber = 0;
-        for (int[] is : hydroThermalVents) {
-            for (int is2 : is) {
-                if (is2 > biggestNumber) {
-                    biggestNumber = is2;
-                }
-            }
-        }
-        // create the x/y grid
-        int[][] xyGrid = new int[biggestNumber + 1][biggestNumber + 1];
-        // Plot xyGrid
-        for (int[] is : hydroThermalVents) {
-            // if columns are equal, plot rows. 
-            if (is[1] == is[3]) {
-                // plot x
-                int col = is[1];
-                // check which is the bigger value for x coordinate
-                if (is[0] < is[2]) {
-                    for (int i = is[0]; i < is[2] + 1; i++) {
-                        int currentValue = xyGrid[col][i];
-                        currentValue++;
-                        xyGrid[col][i] = currentValue;
-                    }
-                } else {
-                    for (int i = is[2]; i < is[0] + 1; i++) {
-                        int currentValue = xyGrid[col][i];
-                        currentValue++;
-                        xyGrid[col][i] = currentValue;
-                    }
-                }
-            } else {
-                // plot y
-                int row = is[2];
-                // check which is the bigger value for y coordinate
-                if (is[1] < is[3]) {
-                    for (int i = is[1]; i < is[3] + 1; i++) {
-                        int currentValue = xyGrid[i][row];
-                        currentValue++;
-                        xyGrid[i][row] = currentValue;
-                    }
-                } else {
-                    for (int i = is[3]; i < is[1] + 1; i++) {
-                        int currentValue = xyGrid[i][row];
-                        currentValue++;
-                        xyGrid[i][row] = currentValue;
-                    }
-                }
-            }
-        }
-
-        int numOfDangerPts = 0;
-        for (int[] is : xyGrid) {
-            for (int is2 : is) {
-                if (is2 >= 2)
-                    numOfDangerPts++;
-            }
-        }
-        displayResult(numOfDangerPts, "1");
+        displayResult(count, "1");
     }
 
     @Override
     void solvePart02(List<String> input) {
-        // TODO Auto-generated method stub
 
-    }
-
-    private int[] getXYRow(String row) {
-        int[] xyRow = new int[4];
-        Pattern pat = Pattern.compile("\\b\\d+\\b");
-        Matcher mat = pat.matcher(row);
-        int counter = 0;
-        while (mat.find())
-            xyRow[counter++] = Integer.parseInt(mat.group());
-        return xyRow;
     }
 
     public static void main(String[] args) {
-        AoC2021Core day05 = new Day05("5");
+        AoCPuzzle day05 = new Day05("5");
         //day05.solvePart01(day05.getTestInput());
         day05.solvePart01(day05.getInput());
 
-        day05.solvePart02(day05.getTestInput());
+        // day05.solvePart02(day05.getTestInput());
         // day05.solvePart02(day05.getInput());
 
     }
 
+    private static class Point {
+        private int x;
+        private int y;
+
+        public Point(String[] coordinate) {
+            x = Integer.parseInt(coordinate[0]);
+            y = Integer.parseInt(coordinate[1]);
+        }
+
+        public Point(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public int getY() {
+            return y;
+        }
+
+        public void setY(int y) {
+            this.y = y;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public void setX(int x) {
+            this.x = x;
+        }
+
+        @Override
+        public String toString() {
+            return "Point{" +
+                    "x=" + x +
+                    ", y=" + y +
+                    '}';
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(x, y);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if(this == obj) return true;
+			if(obj == null || getClass() != obj.getClass()) return false;
+			Point point = (Point) obj;
+			return x == point.x && y == point.y;
+        }
+    }
+
+    private static class Line {
+        private Point startPoint, endPoint;
+
+        public Line(Point point, Point point2) {
+            this.startPoint = point;
+            this.endPoint = point2;
+        }
+
+        public Point getEndPoint() {
+            return endPoint;
+        }
+
+        public Point getStartPoint() {
+            return startPoint;
+        }
+    }
 }

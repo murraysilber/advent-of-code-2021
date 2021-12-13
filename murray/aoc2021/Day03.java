@@ -3,7 +3,7 @@ package murray.aoc2021;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day03 extends AoC2021Core {
+public class Day03 extends AoCPuzzle {
 
     public Day03(String day) {
         super(day);

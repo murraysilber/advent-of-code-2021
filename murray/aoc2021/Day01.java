@@ -2,7 +2,7 @@ package murray.aoc2021;
 
 import java.util.List;
 
-public class Day01 extends AoC2021Core {
+public class Day01 extends AoCPuzzle {
 
     public Day01(String day) {
         super(day);
@@ -38,7 +38,7 @@ public class Day01 extends AoC2021Core {
 
     public static void main(String[] args) {
 
-        AoC2021Core day01 = new Day01("1");
+        AoCPuzzle day01 = new Day01("1");
         day01.solvePart01(day01.getInput());
         day01.solvePart02(day01.getInput());
 

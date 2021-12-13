@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class AoC2021Core {
+public abstract class AoCPuzzle {
 
     private String day = "";
     private List<String> input;
     private List<String> testInput;
     
-    public AoC2021Core(String day) {
+    public AoCPuzzle(String day) {
         this.day = day;
         setInput(parseInput());
         setTestInput(parseTestInput());
