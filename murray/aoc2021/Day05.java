@@ -26,48 +26,95 @@ public class Day05 extends AoCPuzzle {
         return lines;
     }
 
-    private void plotLinesOnGrid() {
+    public void drawGrid() {
+        for (int i = 0; i <= 9; i++) {
+            for (int j = 0; j <= 9; j++) {
+                Integer visits = this.grid.get(new Point(j, i));
+                if (visits != null) {
+                    System.out.print(visits + " ");
+                } else {
+                    System.out.print("." + " ");
+                }
+
+            }
+            System.out.println();
+        }
+    }
+
+    private void plotLinesOnGrid(String puzzlePart) {
         for (Line line : this.lines) {
             Point startPoint = line.getStartPoint();
             Point endPoint = line.getEndPoint();
-            if (startPoint.y == endPoint.y) {
-                for (int i = Math.min(startPoint.x, endPoint.x); i <= Math.max(startPoint.x, endPoint.x); i++) {
-                    this.grid.merge(new Point(i, startPoint.y), 1, Integer::sum);
-                }          
-            } else if (startPoint.x == endPoint.x) {
-                for (int i = Math.min(startPoint.y, endPoint.y); i <= Math.max(startPoint.y, endPoint.y); i++) {
-                    this.grid.merge(new Point(startPoint.x, i), 1, Integer::sum);
-                }        
+            if (startPoint.y == endPoint.y) { // plot horizontals
+                plotHorizontalLines(startPoint, endPoint);
+            } else if (startPoint.x == endPoint.x) { // plot verticals
+                plotVerticalLines(startPoint, endPoint);
+            } else { // plot diagonals
+                if (puzzlePart.equals("2")) {
+                    int xDir = endPoint.x - startPoint.x > 0 ? 1 : -1;
+                    int yDir = endPoint.y - startPoint.y > 0 ? 1 : -1;
+                    plotDiagonalLines(startPoint, endPoint, xDir, yDir);
+                }
+
             }
+        }
+    }
+
+    private void plotDiagonalLines(Point startPoint, Point endPoint, int xDir, int yDir) {
+        for (int i = 0; i <= Math.abs(endPoint.x - startPoint.x); i++)
+            this.grid.merge(new Point(startPoint.x + (xDir * i), startPoint.y + (yDir * i)), 1,
+                    Integer::sum);
+    }
+
+    private void plotVerticalLines(Point startPoint, Point endPoint) {
+        for (int i = Math.min(startPoint.y, endPoint.y); i <= Math.max(startPoint.y, endPoint.y); i++) {
+            this.grid.merge(new Point(startPoint.x, i), 1, Integer::sum);
+        }
+    }
+
+    private void plotHorizontalLines(Point startPoint, Point endPoint) {
+        for (int i = Math.min(startPoint.x, endPoint.x); i <= Math.max(startPoint.x, endPoint.x); i++) {
+            this.grid.merge(new Point(i, startPoint.y), 1, Integer::sum);
         }
     }
 
     @Override
     void solvePart01(List<String> input) {
         lines = getLines(input);
-        plotLinesOnGrid();
+        plotLinesOnGrid("1");
 
         int count = 0;
         for (int visits : this.grid.values()) {
-
-            if (visits > 1)
+            if (visits > 1) {
                 count++;
+            }
         }
         displayResult(count, "1");
+        drawGrid();
     }
 
     @Override
     void solvePart02(List<String> input) {
+        lines = getLines(input);
+        plotLinesOnGrid("2");
 
+        int count = 0;
+        for (int visits : this.grid.values()) {
+            if (visits > 1) {
+                count++;
+            }
+        }
+        displayResult(count, "2");
+        drawGrid();
     }
 
     public static void main(String[] args) {
         AoCPuzzle day05 = new Day05("5");
         //day05.solvePart01(day05.getTestInput());
-        day05.solvePart01(day05.getInput());
+        // day05.solvePart01(day05.getInput());
 
-        // day05.solvePart02(day05.getTestInput());
-        // day05.solvePart02(day05.getInput());
+       // day05.solvePart02(day05.getTestInput());
+         day05.solvePart02(day05.getInput());
 
     }
 
@@ -85,22 +132,6 @@ public class Day05 extends AoCPuzzle {
             this.y = y;
         }
 
-        public int getY() {
-            return y;
-        }
-
-        public void setY(int y) {
-            this.y = y;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public void setX(int x) {
-            this.x = x;
-        }
-
         @Override
         public String toString() {
             return "Point{" +
@@ -116,10 +147,12 @@ public class Day05 extends AoCPuzzle {
 
         @Override
         public boolean equals(Object obj) {
-            if(this == obj) return true;
-			if(obj == null || getClass() != obj.getClass()) return false;
-			Point point = (Point) obj;
-			return x == point.x && y == point.y;
+            if (this == obj)
+                return true;
+            if (obj == null || getClass() != obj.getClass())
+                return false;
+            Point point = (Point) obj;
+            return x == point.x && y == point.y;
         }
     }
 
@@ -137,6 +170,16 @@ public class Day05 extends AoCPuzzle {
 
         public Point getStartPoint() {
             return startPoint;
+        }
+
+        @Override
+        public String toString() {
+            return "Line{" +
+                    "startPoint.x=" + startPoint.x +
+                    ", startPoint.y=" + startPoint.y +
+                    ", endPoint.x=" + endPoint.x +
+                    ", endPoint.y=" + endPoint.y +
+                    '}';
         }
     }
 }
