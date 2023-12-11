@@ -25,8 +25,8 @@ public abstract class AoCPuzzle {
 
     private void setFileInput(List<String> input) {
         this.fileInput = input;
-    }
 
+}
     abstract void solvePart01(List<String> input);
     abstract void solvePart02(List<String> input);
 

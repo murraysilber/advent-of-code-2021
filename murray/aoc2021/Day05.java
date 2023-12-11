@@ -90,7 +90,7 @@ public class Day05 extends AoCPuzzle {
             }
         }
         displayResult(count, "1");
-        drawGrid();
+        //drawGrid();
     }
 
     @Override
@@ -105,16 +105,16 @@ public class Day05 extends AoCPuzzle {
             }
         }
         displayResult(count, "2");
-        drawGrid();
+        //drawGrid();
     }
 
     public static void main(String[] args) {
         AoCPuzzle day05 = new Day05("5");
         //day05.solvePart01(day05.getTestInput());
-        // day05.solvePart01(day05.getInput());
+        day05.solvePart01(day05.getFileInput());
 
        // day05.solvePart02(day05.getTestInput());
-         day05.solvePart02(day05.getInput());
+        day05.solvePart02(day05.getFileInput());
 
     }
 
