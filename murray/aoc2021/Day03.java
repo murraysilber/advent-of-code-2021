@@ -90,7 +90,7 @@ public class Day03 extends AoCPuzzle {
 
         powerConsumption = Long.parseLong(gammaRate, 2) * Long.parseLong(epsilonRate, 2);
         displayResult(String.valueOf(powerConsumption), "1");
-        
+
     }
 
     @Override
@@ -103,10 +103,10 @@ public class Day03 extends AoCPuzzle {
 
     public static void main(String[] args) {
         Day03 day03 = new Day03("3");
-        day03.solvePart01(day03.getInput());
-        day03.solvePart02(day03.getInput());
+        day03.solvePart01(day03.getFileInput());
+        day03.solvePart02(day03.getFileInput());
     }
 
-    
+
 
 }

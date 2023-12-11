@@ -60,7 +60,7 @@ public class Day02 extends AoCPuzzle {
 
     public static void main(String[] args) {
         AoCPuzzle day02 = new Day02("2");
-        day02.solvePart01(day02.getInput());
-        day02.solvePart02(day02.getInput());
+        day02.solvePart01(day02.getFileInput());
+        day02.solvePart02(day02.getFileInput());
     }
 }

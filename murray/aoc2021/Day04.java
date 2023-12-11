@@ -183,10 +183,10 @@ public class Day04 extends AoCPuzzle {
     public static void main(String[] args) {
         AoCPuzzle day04 = new Day04("4");
         // day04.solvePart01(day04.getTestInput());
-        day04.solvePart01(day04.getInput());
+        day04.solvePart01(day04.getFileInput());
 
         //day04.solvePart02(day04.getTestInput());
-        day04.solvePart02(day04.getInput());
+        day04.solvePart02(day04.getFileInput());
 
     }
 
