@@ -1,8 +1,5 @@
 package murray.aoc2021;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +13,6 @@ public class Day04 extends AoCPuzzle {
     @Override
     void solvePart01(List<String> input) {
         String[] randomNumbers = input.get(0).split(",");
-
         List<int[][]> boards = generateBoards(input);
 
         for (String num : randomNumbers) {
@@ -28,7 +24,6 @@ public class Day04 extends AoCPuzzle {
             // check if we have a winning board
             for (int[][] board : boards) {
                 boolean hasWon = hasBoardWon(board);
-                // writeToFile(board, number, hasWon);
                 if (hasWon) {
                     // do calculation
                     long answer = calculateWinningScore(board) * number;
@@ -59,7 +54,6 @@ public class Day04 extends AoCPuzzle {
             while (iter.hasNext()) {
                 int[][] board = iter.next();
                 boolean hasWon = hasBoardWon(board);
-                //writeToFile(board, number, hasWon);
                 if (hasWon) {
                     if (boards.size() > 1) {
                         iter.remove();
@@ -72,34 +66,6 @@ public class Day04 extends AoCPuzzle {
 
                 }
             }
-        }
-    }
-
-    private void writeToFile(int[][] board, int number, boolean hasWon) {
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("resources/ouput.txt", true));
-            bw.write("" + number + "\n");
-            bw.write("" + hasWon + "\n");
-            bw.write("\n");
-            for (int[] row : board) {
-                for (int is : row) {
-                    bw.write("" + is + " ");
-                }
-                bw.write("\n");
-            }
-            bw.write("\n*******************\n");
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void printBoard(int[][] board) {
-        for (int row = 0; row < board.length; row++) {
-            for (int col = 0; col < board.length; col++) {
-                System.out.print(board[row][col] + " ");
-            }
-            System.out.println();
         }
     }
 
@@ -182,10 +148,7 @@ public class Day04 extends AoCPuzzle {
 
     public static void main(String[] args) {
         AoCPuzzle day04 = new Day04("4");
-        // day04.solvePart01(day04.getTestInput());
         day04.solvePart01(day04.getFileInput());
-
-        //day04.solvePart02(day04.getTestInput());
         day04.solvePart02(day04.getFileInput());
 
     }
